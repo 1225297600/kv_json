@@ -18,7 +18,7 @@ uint32_t kv_json_format(char *buf, uint32_t len) {
 	
 	while (src < end && *src != '\0') {
 		char c = *src++;
-		// ±£Áô¿É´òÓ¡×Ö·û£¨²»°üÀ¨¿Õ¸ñ£©
+		// ä¿ç•™å¯æ‰“å°å­—ç¬¦ï¼ˆä¸åŒ…æ‹¬ç©ºæ ¼ï¼‰
 		if (c > ' ' && c <= '~') {
 			*dst++ = c;
 		}
@@ -43,14 +43,14 @@ int kv_json_decode_poller(char *buf, uint32_t len, int (*callback)(uint16_t inde
   char *k_start = NULL, *k_end = NULL, *v_end = NULL;
 	
 	for(char *p = start; p!=end; p++){
-		//²éÕÒ key ¿ªÊ¼
+		//æŸ¥æ‰¾ key å¼€å§‹
 		if(k_start == NULL){
 			if(*p == '\"'){
 				for(char *tmp = p+1; tmp!=end; tmp++){
 					if(tmp + 2 < end && *tmp == '\"'){
 						if(*(tmp + 2) == '{'){
 							p = tmp + 2;
-							break;//ÅÅ³ý½á¹¹¶ÔÏó
+							break;//æŽ’é™¤ç»“æž„å¯¹è±¡
 						}else{
 							k_start = p + 1;
 						}
@@ -60,7 +60,7 @@ int kv_json_decode_poller(char *buf, uint32_t len, int (*callback)(uint16_t inde
 			continue;
 		}
 		
-		//²éÕÒ key ½áÊø
+		//æŸ¥æ‰¾ key ç»“æŸ
 		if(k_end == NULL){
 			if(p + 1 < end && *p == '\"' && *(p + 1) == ':'){
 				k_end = p;
@@ -68,7 +68,7 @@ int kv_json_decode_poller(char *buf, uint32_t len, int (*callback)(uint16_t inde
 			continue;
 		}
 		
-		//²éÕÒ value ½áÊø
+		//æŸ¥æ‰¾ value ç»“æŸ
 		if(v_end == NULL){
 			if(p + 1 < end && (*p == ']' || *p == ',' || *p == '}')){
 				if(*(p+1) == ']' || *(p+1) == ',' || *(p+1) == '}' 
