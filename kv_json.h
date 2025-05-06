@@ -11,10 +11,23 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-uint32_t json_format(char *buf, uint32_t len);
+/**
+ * @brief 格式化 JSON 字符串，保留可打印字符（不包括空格）
+ * @param buf 输入的 JSON 字符串缓冲区
+ * @param len 缓冲区的长度
+ * @return 处理后字符串的长度
+ */
+uint32_t kv_json_format(char *buf, uint32_t len);
 
 
-// will do 'kv_json_format', make 'buf' change
+/**
+ * @brief 解析 JSON 字符串，并调用回调函数处理每个键值对
+ * @param buf 输入的 JSON 字符串缓冲区
+ * @param len 缓冲区的长度
+ * @param callback 处理键值对的回调函数
+ * @return 成功返回 0，失败返回相应的错误码
+ * @note 函数会调用kv_json_format，会改变原本buf字符串的内容
+ */
 int kv_json_decode_poller(char *buf, uint32_t len, int (*callback)(uint16_t index, char *key, uint16_t key_len, char *value, uint16_t value_len));
 
 
